@@ -18,3 +18,5 @@ Discord - https://discord.gg/3WYz3zaqG5
     PlayerData.metadata['sayercraftlevel'] = PlayerData.metadata['sayercraftlevel'] or 1
 ```
 
+## Configure your tables/props/locations
+## and configure your items :)
