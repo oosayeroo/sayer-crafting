@@ -1,5 +1,10 @@
 Discord - https://discord.gg/3WYz3zaqG5
 
+## Sayer Crafting v1.0.0
+```
+Designed to give you a wide variety of ways to enable crafting within your server using multiple props,locations,peds and items
+```
+
 ## Please note
 - any item you use within the script must be in your shared/items.lua for the script to work correctly
 - you must not have any duplicate itemcodes in your Shared/Items.lua
