@@ -1,10 +1,5 @@
 Discord - https://discord.gg/3WYz3zaqG5
 
-## Sayer Crafting v1.0.0
-```
-Designed to give you a wide variety of ways to enable crafting within your server using multiple props,locations,peds and items
-```
-
 ## Please note
 - any item you use within the script must be in your shared/items.lua for the script to work correctly
 - you must not have any duplicate itemcodes in your Shared/Items.lua
@@ -23,5 +18,18 @@ Designed to give you a wide variety of ways to enable crafting within your serve
     PlayerData.metadata['sayercraftlevel'] = PlayerData.metadata['sayercraftlevel'] or 1
 ```
 
-## Configure your tables/props/locations
-## and configure your items :)
+## external craft bench event
+```lua
+-- from client side script (replace arg 1 'basic' with the name of a crafting table from your config)(replace arg2 'idle' with an emote you want to use on this bench)
+    TriggerEvent('sayer-crafting:ExternalBench','basic','idle')
+-- from server side
+    TriggerClientEvent('sayer-crafting:ExternalBench','basic','idle')
+```
+
+## external recycle bench event
+```lua
+    --from client side
+    TriggerEvent('sayer-crafting:ExternalRecycle')
+    --from server side
+    TriggerClientEvent('sayer-crafting:ExternalRecycle')
+```

@@ -21,7 +21,7 @@ Config.CustomMenu = {
     SpeechRecognise - enables 17Mov's speech recognition system
 } ]]
 Config.CraftProps = { --enables targetting certain props to access crafting
-    {
+    { --table starts here
         Enable = true, -- enabled/disable these set of props
         LVLUnlocked = 5, --can be level number or (false or just remove the line)
         Props = {
@@ -32,7 +32,7 @@ Config.CraftProps = { --enables targetting certain props to access crafting
         },
         CraftingTable = 'basic', --the table that is used from Config.CraftingTable
         CraftEmote = 'mechanic', --emote that is used when crafting from spot
-    },
+    }, --table ends here
     {
         Enable = false,
         Props = {
@@ -48,7 +48,7 @@ Config.CraftLocations = { --enables a boxzone location to target and access craf
     {
         Enable = true,
         Locations = {
-            {Coords = vector3(606.52, -3087.7, 6.07), Heading = 0,},
+            {Label = "Crafting",Coords = vector3(606.52, -3087.7, 6.07), Heading = 0,},
         },
         CraftingTable = 'basic',
         CraftEmote = 'mechanic',
@@ -56,7 +56,7 @@ Config.CraftLocations = { --enables a boxzone location to target and access craf
     {
         Enable = true,
         Locations = {
-            {Coords = vector3(458.1, -979.08, 30.69), Heading = 0,},
+            {Label = "Crafting",Coords = vector3(458.1, -979.08, 30.69), Heading = 0,},
         },
         CraftingTable = 'police',
         CraftEmote = 'mechanic',
@@ -65,28 +65,28 @@ Config.CraftLocations = { --enables a boxzone location to target and access craf
 }
 
 Config.PedOptions = { --ped options for the Config.CraftPeds table
-    MinusOne = true,
-    Freeze = true,
-    Invincible = true,
-    IgnoreEvents = true,
+    ['MinusOne'] = true,
+    ['Freeze'] = true,
+    ['Invincible'] = true,
+    ['IgnoreEvents'] = true,
 }
 Config.CraftPeds = {  --spawns peds that let you access the crafting (if you do not wish to use change Peds = {} to Peds = false)
     {
         Enable = true,
         Peds = {
             {
-                Model = 'a_m_m_eastsa_02',
-                Coords = vector4(0, 0, 0, 0),
+                Model = 'a_f_m_business_02',
+                Coords = vector4(332.55, -213.72, 54.08, 57.74),
                 Label = "Trading",
             },
-            {
-                Model = 'a_m_m_eastsa_02',
-                Coords = vector4(335.43, -213.77, 54.09, 69.51),
-                Label = "Trading",
-                SpeechRecognise = {
-                    {Phrase = {"test crafting",},BlockInVehicle = true,AllowRecognitionInReverse = false},
-                },
-            },
+            -- {
+            --     Model = 'a_m_m_eastsa_02',
+            --     Coords = vector4(335.43, -213.77, 54.09, 69.51),
+            --     Label = "Trading",
+            --     SpeechRecognise = {
+            --         {Phrase = {"test crafting",},BlockInVehicle = true,AllowRecognitionInReverse = false},
+            --     },
+            -- },
         },
         CraftingTable = 'basic',
         CraftEmote = 'argue',
@@ -305,6 +305,19 @@ Config.CraftingTable = {
         },
     }
 }
+
+Config.Recycle = { --working
+    ['lockpick'] = {
+        [1] = {item = 'iron',Min = 1,Max = 3},
+        [2] = {item = 'steel',Min = 1,Max = 3},
+    },
+    ['car_tyre'] = {
+        [1] = {item = 'rubber',Min = 1,Max = 3},
+    },
+}
+Config.RecycleTime = 10
+Config.RecycleSuccessChance = 50
+
 
 Config.Levels = {
     [1] = {NextLevel = 100},
