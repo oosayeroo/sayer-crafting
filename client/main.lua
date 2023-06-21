@@ -14,7 +14,7 @@ AddEventHandler('onResourceStart', function(resource)
 	QBCore.Functions.GetPlayerData(function(PlayerData)
 		PlayerLVL = PlayerData.metadata['sayercraftlevel']
 	end)
-    EnableTargetShit()
+    --EnableTargetShit()
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
@@ -98,12 +98,13 @@ function EnableTargetShit()
                         if v.Peds then
                             for d,j in pairs(v.Peds) do
                                 TargetPed["CraftPed"..k..d] =
-                                exports['qb-target']:SpawnPed({model = j.Model,coords = j.Coords, minusOne = Config.PedOptions.MinusOne,freeze = Config.PedOptions.Freeze,invincible = Config.PedOptions.Invincible,blockevents = Config.PedOptions.IgnoreEvents,
-                                    scenario = 'WORLD_HUMAN_DRUG_DEALER',
-                                    target = {options = {{icon = "fas fa-hand",label = "Trading",action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
+                                exports['qb-target']:SpawnPed({model = j.Model,coords = j.Coords, minusOne = Config.PedOptions['MinusOne'],freeze = Config.PedOptions['Freeze'],invincible = Config.PedOptions['Invincible'],blockevents = Config.PedOptions['IgnoreEvents'],
+                                scenario = 'WORLD_HUMAN_DRUG_DEALER',
+                                    target = {options = {{icon = "fas fa-hand",label = j.Label,action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
                                     distance = 2.5,
                                     },
                                 })
+                                if Config.DebugCode then print("SAYER-CRAFTING: ^4Ped ^7/ ^4LVL "..v.LVLUnlocked.." ^7/ ^4CraftPed "..k..d.." ^7Spawned") end
                                 if j.SpeechRecognise then
                                     for p,m in pairs(j.SpeechRecognise) do
                                         if Config.DebugCode then print("Before Export") end
@@ -131,26 +132,27 @@ function EnableTargetShit()
                         end
                     end
                 else
-                    if v.Peds then
-                        for d,j in pairs(v.Peds) do
-                            TargetPed["CraftPed"..k..d] =
-                            exports['qb-target']:SpawnPed({model = j.Model,coords = j.Coords, minusOne = Config.PedOptions.MinusOne,freeze = Config.PedOptions.Freeze,invincible = Config.PedOptions.Invincible,blockevents = Config.PedOptions.IgnoreEvents,
+                    --if v.Peds then
+                        for d2,j2 in pairs(v.Peds) do
+                            TargetPed["CraftPed"..k..d2] =
+                            exports['qb-target']:SpawnPed({model = j2.Model,coords = j2.Coords, minusOne = Config.PedOptions['MinusOne'],freeze = Config.PedOptions['Freeze'],invincible = Config.PedOptions['Invincible'],blockevents = Config.PedOptions['IgnoreEvents'],
                                 scenario = 'WORLD_HUMAN_DRUG_DEALER',
-                                target = {options = {{icon = "fas fa-hand",label = "Trading",action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
+                                target = {options = {{icon = "fas fa-hand",label = j2.Label,action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
                                 distance = 2.5,
                                 },
                             })
-                            if j.SpeechRecognise then
-                                for p,m in pairs(j.SpeechRecognise) do
+                            if Config.DebugCode then print("SAYER-CRAFTING: ^4Ped ^7/ ^4No LVL ^7/ ^4CraftPed "..k..d2.." ^7Spawned") end
+                            if j2.SpeechRecognise then
+                                for p2,m2 in pairs(j2.SpeechRecognise) do
                                     if Config.DebugCode then print("Before Export") end
                                     exports["17mov_SpeechRecognition"]:NewAction({
-                                        phrases = m.Phrase,
-                                        allowRecognitionInReverse = m.AllowRecognitionInReverse,
-                                        blockInVehicle = m.BlockInVehicle,
+                                        phrases = m2.Phrase,
+                                        allowRecognitionInReverse = m2.AllowRecognitionInReverse,
+                                        blockInVehicle = m2.BlockInVehicle,
                                         actionType = "custom",
                                         actionFunction = function()
                                             if Config.DebugCode then print("ACTION RECOGNIZED") end
-                                            if #(GetEntityCoords(PlayerPedId()) - vec3(j.Coords.x, j.Coords.y, j.Coords.z)) < 5.0 then
+                                            if #(GetEntityCoords(PlayerPedId()) - vec3(j2.Coords.x, j2.Coords.y, j2.Coords.z)) < 5.0 then
                                                 if Config.DebugCode then print("GetDistance = true") end
                                                 OpenCraftMenu(v.CraftingTable,v.CraftEmote)
                                             end
@@ -160,7 +162,7 @@ function EnableTargetShit()
                                 end
                             end
                         end
-                    end
+                    --end
                 end
             end
         end
@@ -203,6 +205,16 @@ RegisterNetEvent('sayer-crafting:UseCraftItem', function(args)
             QBCore.Functions.Notify('You Cant Use This', 'error')
         end
     end
+end)
+
+RegisterNetEvent('sayer-crafting:ExternalBench',function(items,emote)
+    if items ~= nil then
+        OpenCraftMenu(items,emote)
+    end
+end)
+
+RegisterNetEvent('sayer-crafting:ExternalRecycle', function()
+    OpenRecycleMenu()
 end)
              
 function OpenCraftMenu(itemlist, Emote)
@@ -314,6 +326,83 @@ function MakeCraftingItem(item,list,receive,emote,xp,index)
         TriggerEvent('animations:client:EmoteCommandStart', {"c"})
         ClearPedTasks(PlayerPedId())
         IsBusy = false
+        end, function() -- Cancel
+
+        ClearPedTasks(PlayerPedId())
+        QBCore.Functions.Notify('Cancelled...', 'error')
+        IsBusy = false
+        end)
+    else
+        QBCore.Functions.Notify('You Are Busy...', 'error')
+    end
+end
+
+function OpenRecycleMenu()
+    local List = Config.Recycle
+    local columns = {
+        {header = "Recycling", isMenuHeader = true}, 
+    }
+    for k, v in pairs(List) do
+        if QBCore.Shared.Items[k] ~= nil then
+            if QBCore.Functions.HasItem(k) then
+                local item = {}
+                item.header = "<img src=nui://"..Config.CustomMenu.InventoryLink..QBCore.Shared.Items[k].image.." width=35px style='margin-right: 10px'> " .. QBCore.Shared.Items[k].label
+                local text = ""
+                for d, j in ipairs(List[k]) do
+                    if QBCore.Shared.Items[j.item] ~= nil then
+                        text = text .. "- " .. QBCore.Shared.Items[j.item].label .. " <br>"
+                    else
+                        print('^1SAYER-CRAFTING: ^7Cannot Find ^4'..j.item..' ^7From ^4Recycling ^7In ^4Shared/Items.lua')
+                    end
+                end
+                item.text = text
+                item.params = {event = 'sayer-crafting:RecycleItem',args = {type = k}}
+                table.insert(columns, item)
+            end
+        else
+            print('^1SAYER-CRAFTING: ^7Cannot Find ^4'..k..' ^7From ^4Recycling ^7In ^4Shared/Items.lua')
+        end
+    end
+
+    exports['qb-menu']:openMenu(columns)
+end
+
+RegisterNetEvent('sayer-crafting:RecycleItem', function(data)
+    if QBCore.Functions.HasItem(data.type) then
+        RecycleItem(data.type)
+    else
+        QBCore.Functions.Notify('You Dont Have The Items For This!', 'error')
+        return
+    end
+end)
+
+function RecycleItem(item)
+    if not IsBusy then
+        IsBusy = true
+
+        TriggerEvent('animations:client:EmoteCommandStart', {'mechanic'})
+        QBCore.Functions.Progressbar('cooking_food', "Recycling "..QBCore.Shared.Items[item].label, Config.RecycleTime * 1000, false, false, {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true,},
+        {}, {}, {}, function()
+
+        local success = Config.RecycleSuccessChance
+        local random = math.random(1,100)
+
+        if random <= success then
+            TriggerServerEvent('sayer-crafting:RemoveItem', item, 1)
+            QBCore.Functions.Notify("Successfully Recycled"..QBCore.Shared.Items[item].label.."!", 'success')
+            for k, v in pairs(Config.Recycle[item]) do
+                TriggerServerEvent('sayer-crafting:MakeFinal', v.item, math.random(v.Min,v.Max))
+            end
+        else
+            TriggerServerEvent('sayer-crafting:RemoveItem', item, 1)
+            QBCore.Functions.Notify('The Materials Got Messed Up!', 'error')
+        end
+
+        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+        ClearPedTasks(PlayerPedId())
+        IsBusy = false
+        Wait(1000)
+        OpenRecycleMenu()
         end, function() -- Cancel
 
         ClearPedTasks(PlayerPedId())
