@@ -1,6 +1,11 @@
 Config = {}
 
-Config.DebugCode = true
+Config.DebugCode = false
+
+Config.Webhooks = {
+    Enable = false,
+    URL = 'changeme',
+}
 
 Config.CustomMenu = {
     InventoryLink = 'qb-inventory/html/images/',
