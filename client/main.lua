@@ -189,6 +189,7 @@ function EnableTargetShit()
                                 options = {{action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,icon = "fas fa-hammer",label = "Crafting",item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
                                 distance = 2.5,
                             })
+                        end
                     end
                 end
             end
