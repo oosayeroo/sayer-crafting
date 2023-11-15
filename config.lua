@@ -49,6 +49,20 @@ Config.CraftProps = { --enables targetting certain props to access crafting
     },
 }
 
+Config.SpawnCraftProps = { --spawns a prop to be used as a crafting table
+    { 
+        Enable = true, -- enabled/disable these set of props
+        LVLUnlocked = 1, --can be level number or (false or just remove the line)
+        prop = `bkr_prop_coke_table01a`, -- the prop you want to spawn
+        Locations = { --the locations to spawn them in
+            {Coords = vector3(0,0,0)}, --changeme
+            
+        },
+        CraftingTable = 'basic', --the table that is used from Config.CraftingTable
+        CraftEmote = 'mechanic', --emote that is used when crafting from spot
+    }, --table ends here
+}
+
 Config.CraftLocations = { --enables a boxzone location to target and access crafting
     {
         Enable = true,
