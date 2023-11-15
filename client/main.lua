@@ -2,6 +2,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 isLoggedIn = true
 PlayerJob = {}
+local SpawnTargetProp = {}
 local TargetProp = {}
 local TargetLoc = {}
 local TargetPed = {}
@@ -163,6 +164,32 @@ function EnableTargetShit()
                             end
                         end
                     --end
+                end
+            end
+        end
+        for k,v in pairs(Config.SpawnCraftProps) do
+            if v.Enable then
+                if v.LVLUnlocked then
+                    if PlayerLVL >= v.LVLUnlocked then
+                        for d,j in pairs(v.Locations) do
+                            local model = ''
+                            local entity = ''
+                            model = v.prop
+                            RequestModel(model)
+                            while not HasModelLoaded(model) do
+                              Wait(0)
+                            end
+                        
+                            entity = CreateObject(model, j.Coords.x, j.Coords.y, j.Coords.z-1, v.Coords.w, false, true, false)
+                            FreezeEntityPosition(entity,true)
+                            PlaceObjectOnGroundProperly(entity)
+                            SetEntityAsMissionEntity(entity)
+                            SpawnTargetProp["SpawnTargetProp"..k..d] = 
+                            exports['qb-target']:AddTargetEntity(entity,{
+                                options = {{action = function() OpenCraftMenu(v.CraftingTable,v.CraftEmote) end,icon = "fas fa-hammer",label = "Crafting",item = v.ItemLocked,job = v.JobLocked,gang = v.GangLocked,citizenid = v.CIDLocked,},},
+                                distance = 2.5,
+                            })
+                    end
                 end
             end
         end
@@ -416,6 +443,7 @@ end
 
 AddEventHandler('onResourceStop', function(t) if t ~= GetCurrentResourceName() then return end
 	for k in pairs(TargetProp) do exports['qb-target']:RemoveTargetModel(k) end
+    for k in pairs(SpawnTargetProp) do exports['qb-target']:RemoveTargetModel(k) end
     for k in pairs(TargetPed) do exports['qb-target']:RemoveSpawnedPed(k) end
     for k in pairs(TargetLoc) do exports['qb-target']:RemoveZone(k) end
 end)
