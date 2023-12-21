@@ -55,7 +55,7 @@ Config.SpawnCraftProps = { --spawns a prop to be used as a crafting table
         LVLUnlocked = 1, --can be level number or (false or just remove the line)
         prop = `bkr_prop_coke_table01a`, -- the prop you want to spawn
         Locations = { --the locations to spawn them in
-            {Coords = vector3(0,0,0)}, --changeme
+            {Coords = vector4(0,0,0,0)}, --changeme
             
         },
         CraftingTable = 'basic', --the table that is used from Config.CraftingTable
