@@ -180,7 +180,8 @@ function EnableTargetShit()
                               Wait(0)
                             end
                         
-                            entity = CreateObject(model, j.Coords.x, j.Coords.y, j.Coords.z-1, v.Coords.w, false, true, false)
+                            entity = CreateObject(model, j.Coords.x, j.Coords.y, j.Coords.z-1, false, true, false)
+			    SetEntityHeading(entity,j.Coords.w)
                             FreezeEntityPosition(entity,true)
                             PlaceObjectOnGroundProperly(entity)
                             SetEntityAsMissionEntity(entity)
