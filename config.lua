@@ -1,6 +1,11 @@
 Config = {}
 
-Config.DebugCode = false
+Config.DebugCode = true
+
+Config.Target = 'qb' -- qb/ox
+Config.Menu = 'ox' --qb/ox/UI --for my custom UI use code UI
+Config.Inventory = 'ox' --qb/ox
+Config.Progressbar = 'ox' --qb/ox
 
 Config.Webhooks = {
     Enable = false,
@@ -8,7 +13,6 @@ Config.Webhooks = {
 }
 
 Config.CustomMenu = {
-    InventoryLink = 'qb-inventory/html/images/',
     HideLockedItems = true, --hides items you havent reached the level for(false shows them but wont let you craft them)
     ShowLevelRequired = false, --only works if HideLockedItems = false
 }
@@ -30,20 +34,22 @@ Config.CraftProps = { --enables targetting certain props to access crafting
         Enable = true, -- enabled/disable these set of props
         LVLUnlocked = 5, --can be level number or (false or just remove the line)
         Props = {
-            {prop = `prop_arm_wrestle_01`,}, --never use the same prop twice as it will stop the script working as intended
-            {prop = `gr_prop_gr_bench_04a`,},
-            {prop = `imp_prop_impexp_mechbench`,},
-            {prop = `prop_tool_bench02_ld`,},
+            {prop = 'prop_arm_wrestle_01'}, --never use the same prop twice as it will stop the script working as intended
+            {prop = 'gr_prop_gr_bench_04a'},
+            {prop = 'imp_prop_impexp_mechbench'},
+            {prop = 'prop_tool_bench02_ld'},
         },
         CraftingTable = 'basic', --the table that is used from Config.CraftingTable
+        LevelData = 'basic',
         CraftEmote = 'mechanic', --emote that is used when crafting from spot
     }, --table ends here
     {
         Enable = false,
         Props = {
-            {prop = `prop_toolchest_05`,},
+            {prop = 'prop_toolchest_05'},
         },
         CraftingTable = 'police',
+        LevelData = 'basic',
         JobLocked = 'police',
         CraftEmote = 'mechanic',
     },
@@ -53,12 +59,13 @@ Config.SpawnCraftProps = { --spawns a prop to be used as a crafting table
     { 
         Enable = true, -- enabled/disable these set of props
         LVLUnlocked = 1, --can be level number or (false or just remove the line)
-        prop = `bkr_prop_coke_table01a`, -- the prop you want to spawn
+        prop = 'bkr_prop_coke_table01a', -- the prop you want to spawn
         Locations = { --the locations to spawn them in
-            {Coords = vector4(0,0,0,0)}, --changeme
+            {Coords = vector4(-598.96, -336.89, 34.85, 0.0)}, --changeme
             
         },
         CraftingTable = 'basic', --the table that is used from Config.CraftingTable
+        LevelData = 'basic',
         CraftEmote = 'mechanic', --emote that is used when crafting from spot
     }, --table ends here
 }
@@ -67,48 +74,21 @@ Config.CraftLocations = { --enables a boxzone location to target and access craf
     {
         Enable = true,
         Locations = {
-            {Label = "Crafting",Coords = vector3(606.52, -3087.7, 6.07), Heading = 0,},
+            {Label = "Crafting",Coords = vector3(606.52, -3087.7, 6.07)},
         },
         CraftingTable = 'basic',
+        LevelData = 'basic',
         CraftEmote = 'mechanic',
     },
     {
         Enable = true,
         Locations = {
-            {Label = "Crafting",Coords = vector3(458.1, -979.08, 30.69), Heading = 0,},
+            {Label = "Crafting",Coords = vector3(458.1, -979.08, 30.69)},
         },
         CraftingTable = 'police',
+        LevelData = 'police',
         CraftEmote = 'mechanic',
         JobLocked = 'police',
-    },
-}
-
-Config.PedOptions = { --ped options for the Config.CraftPeds table
-    ['MinusOne'] = true,
-    ['Freeze'] = true,
-    ['Invincible'] = true,
-    ['IgnoreEvents'] = true,
-}
-Config.CraftPeds = {  --spawns peds that let you access the crafting (if you do not wish to use change Peds = {} to Peds = false)
-    {
-        Enable = true,
-        Peds = {
-            {
-                Model = 'a_f_m_business_02',
-                Coords = vector4(332.55, -213.72, 54.08, 57.74),
-                Label = "Trading",
-            },
-            -- {
-            --     Model = 'a_m_m_eastsa_02',
-            --     Coords = vector4(335.43, -213.77, 54.09, 69.51),
-            --     Label = "Trading",
-            --     SpeechRecognise = {
-            --         {Phrase = {"test crafting",},BlockInVehicle = true,AllowRecognitionInReverse = false},
-            --     },
-            -- },
-        },
-        CraftingTable = 'basic',
-        CraftEmote = 'argue',
     },
 }
 
@@ -124,7 +104,7 @@ Config.CraftingTable = {
                 ItemCode = 'lockpick', --item you will craft
                 Amount = 1, --amount you receive
                 CraftTime = 5, --how many Seconds to craft
-                LVLNeeded = 1, --level needed
+                LVLNeeded = 0, --level needed
                 XPGain = 1, --how much xp to gain from successful craft
                 SuccessChance = 70, --(%) chance of success
                 Recipe = {
@@ -136,7 +116,7 @@ Config.CraftingTable = {
                 ItemCode = 'screwdriverset',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 1,
+                LVLNeeded = 0,
                 XPGain = 1,
                 SuccessChance = 70,
                 Recipe = {
@@ -148,7 +128,7 @@ Config.CraftingTable = {
                 ItemCode = 'electronickit',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 1,
+                LVLNeeded = 0,
                 XPGain = 1,
                 SuccessChance = 70,
                 Recipe = {
@@ -161,7 +141,7 @@ Config.CraftingTable = {
                 ItemCode = 'radioscanner',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 1,
+                LVLNeeded = 0,
                 XPGain = 1,
                 SuccessChance = 70,
                 Recipe = {
@@ -174,7 +154,7 @@ Config.CraftingTable = {
                 ItemCode = 'gatecrack',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 1,
+                LVLNeeded = 0,
                 XPGain = 1,
                 SuccessChance = 70,
                 Recipe = {
@@ -209,7 +189,7 @@ Config.CraftingTable = {
                 ItemCode = 'tunerlaptop', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -221,7 +201,7 @@ Config.CraftingTable = {
                 ItemCode = 'repairkit',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 5,
+                LVLNeeded = 0,
                 XPGain = 25,
                 SuccessChance = 10,
                 Recipe = {
@@ -239,7 +219,7 @@ Config.CraftingTable = {
                 ItemCode = 'pistol_extendedclip', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -252,7 +232,7 @@ Config.CraftingTable = {
                 ItemCode = 'pistol_suppressor',
                 Amount = 1,
                 CraftTime = 10,
-                LVLNeeded = 5,
+                LVLNeeded = 0,
                 XPGain = 1,
                 SuccessChance = 70,
                 Recipe = {
@@ -270,7 +250,7 @@ Config.CraftingTable = {
                 ItemCode = 'armor', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -281,7 +261,7 @@ Config.CraftingTable = {
                 ItemCode = 'heavyarmor', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -292,7 +272,7 @@ Config.CraftingTable = {
                 ItemCode = 'handcuffs', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -303,7 +283,7 @@ Config.CraftingTable = {
                 ItemCode = 'police_stormram', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -314,7 +294,7 @@ Config.CraftingTable = {
                 ItemCode = 'empty_evidence_bag', 
                 Amount = 1, 
                 CraftTime = 5, 
-                LVLNeeded = 1, 
+                LVLNeeded = 0, 
                 XPGain = 1, 
                 SuccessChance = 70, 
                 Recipe = {
@@ -337,8 +317,8 @@ Config.Recycle = { --working
 Config.RecycleTime = 10
 Config.RecycleSuccessChance = 50
 
-
 Config.Levels = {
+    [0] = {NextLevel = 1},
     [1] = {NextLevel = 100},
     [2] = {NextLevel = 200},
     [3] = {NextLevel = 300},
