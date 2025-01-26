@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-lib.callback.register('sayer-crafting:itemchecker', function(source, Recipe)
+lib.callback.register('sayer-crafting:itemchecker', function(source, cb, Recipe)
     local src = source
     local hasItems = false
     local itemcount = 0
